@@ -22,6 +22,20 @@ final class CleanerTests: XCTestCase {
         XCTAssertTrue(fm.fileExists(atPath: docs.appendingPathComponent("keep.txt").path))
     }
 
+    func testSuffixTargetOnlyDeletesMatches() throws {
+        let fm = FileManager.default
+        let home = fm.temporaryDirectory.appendingPathComponent(UUID().uuidString)
+        let caches = home.appendingPathComponent("Library/Caches")
+        try fm.createDirectory(at: caches.appendingPathComponent("x.ShipIt"), withIntermediateDirectories: true)
+        try fm.createDirectory(at: caches.appendingPathComponent("other"), withIntermediateDirectories: true)
+        defer { try? fm.removeItem(at: home) }
+
+        let r = Cleaner.run(targets: [CleanupTarget(name: "s", relativePath: "Library/Caches", nameSuffix: ".ShipIt")], home: home)
+
+        XCTAssertEqual(r.deletedItems, 1)
+        XCTAssertTrue(fm.fileExists(atPath: caches.appendingPathComponent("other").path))
+    }
+
     func testRejectsTargetsEscapingHome() throws {
         let fm = FileManager.default
         let root = fm.temporaryDirectory.appendingPathComponent(UUID().uuidString)

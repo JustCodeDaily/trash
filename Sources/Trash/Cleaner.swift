@@ -40,6 +40,7 @@ enum Cleaner {
             }
 
             for child in children {
+                if let suffix = target.nameSuffix, !child.lastPathComponent.hasSuffix(suffix) { continue }
                 // Defense in depth: the child must sit directly inside the target.
                 guard child.deletingLastPathComponent().standardizedFileURL.path == folder.path else { continue }
                 let size = allocatedSize(of: child, fm: fm)
