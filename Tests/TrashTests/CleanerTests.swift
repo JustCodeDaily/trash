@@ -18,6 +18,7 @@ final class CleanerTests: XCTestCase {
         let r = Cleaner.run(targets: [CleanupTarget(name: "c", relativePath: "Library/Caches")], home: home)
 
         XCTAssertEqual(r.deletedItems, 2)
+        XCTAssertEqual(r.paths.first?.name, "c")
         XCTAssertTrue(fm.fileExists(atPath: cache.path))
         XCTAssertTrue(fm.fileExists(atPath: docs.appendingPathComponent("keep.txt").path))
     }

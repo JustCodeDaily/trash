@@ -21,10 +21,8 @@ let cleanupTargets: [CleanupTarget] = [
     CleanupTarget(name: "Chrome cache", relativePath: "Library/Caches/Google"),
     CleanupTarget(name: "App update leftovers", relativePath: "Library/Caches", nameSuffix: ".ShipIt"),
     CleanupTarget(name: "node-gyp headers", relativePath: "Library/Caches/node-gyp"),
-    CleanupTarget(name: "DotSlash binaries", relativePath: "Library/Caches/dotslash"),
     CleanupTarget(name: "Gemini cache", relativePath: "Library/Caches/com.google.GeminiMacOS"),
-    CleanupTarget(name: "npm cache", relativePath: ".npm"),
-    CleanupTarget(name: "User logs", relativePath: "Library/Logs"),
+    CleanupTarget(name: "Logs", relativePath: "Library/Logs"),
     CleanupTarget(name: "Xcode DerivedData", relativePath: "Library/Developer/Xcode/DerivedData"),
     CleanupTarget(name: "Trash bin", relativePath: ".Trash"),
 ]

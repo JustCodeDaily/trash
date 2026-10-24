@@ -1,17 +1,20 @@
 # Trash
 
-A tiny macOS app: one click on **Clean** deletes the contents of the folders listed in
-`cleanupTargets` (`Sources/Trash/CleanupTargets.swift`) — and nothing else.
+A menu bar app (trash icon, top right). **Click it once and it cleans** — no window, no confirmation —
+then a notification shows how much was freed on each path. Right-click for Quit.
+It does not launch at login and has no Dock icon.
 
-Safety rules (enforced in `Cleaner.swift`, covered by tests):
-- Only direct children of listed folders are deleted; the folders themselves stay.
-- Targets must resolve inside the home folder (no `..` escapes, never home itself).
-- Symlinks are never followed; they are removed as links.
+## What it removes (and nothing else)
+Folder contents listed in `cleanupTargets` (`Sources/Trash/CleanupTargets.swift`):
+`~/Library/Caches/Google`, `~/Library/Caches/*.ShipIt`, `~/Library/Caches/node-gyp`,
+`~/Library/Caches/com.google.GeminiMacOS`, `~/Library/Logs/*`,
+`~/Library/Developer/Xcode/DerivedData/*`, `~/.Trash/*`
+plus the fixed commands `npm cache clean --force` and `brew cleanup`.
 
-Defaults: Chrome/node-gyp/dotslash/Gemini caches, `*.ShipIt` update leftovers, `~/.npm`, `~/Library/Logs`, Xcode DerivedData, `~/.Trash`. Edit the array to change them.
-Clean also runs the fixed command `brew cleanup` if Homebrew is installed.
+Safety (enforced in `Cleaner.swift`, covered by tests): only direct children of listed folders are
+deleted; targets must resolve inside the home folder; symlinks are never followed.
 
-Terminal equivalent: `./scripts/clean.zsh`.
-
-Build: `./scripts/build-app.sh` → `build/Trash.app`. Test: `swift test`.
+## Build / test
+`./scripts/build-app.sh` → `build/Trash.app` (drag to Applications). `swift test` runs the tests.
 `~/.Trash` and some caches need Full Disk Access (System Settings → Privacy & Security).
+Terminal equivalent: `./scripts/clean.zsh`.
