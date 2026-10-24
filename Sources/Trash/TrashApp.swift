@@ -25,6 +25,7 @@ struct ContentView: View {
                 ForEach(cleanupTargets) { t in
                     Text("• ~/\(t.relativePath)").font(.system(.caption, design: .monospaced))
                 }
+                Text("• brew cleanup").font(.system(.caption, design: .monospaced))
             }
 
             Button(action: clean) {
@@ -53,7 +54,8 @@ struct ContentView: View {
     private func clean() {
         working = true
         Task.detached {
-            let r = Cleaner.run(targets: cleanupTargets)
+            var r = Cleaner.run(targets: cleanupTargets)
+            if let failure = BrewCleanup.run() { r.failures.append(failure) }
             await MainActor.run { result = r; working = false }
         }
     }

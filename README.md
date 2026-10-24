@@ -9,6 +9,9 @@ Safety rules (enforced in `Cleaner.swift`, covered by tests):
 - Symlinks are never followed; they are removed as links.
 
 Defaults: Chrome/node-gyp/dotslash/Gemini caches, `*.ShipIt` update leftovers, `~/.npm`, `~/Library/Logs`, Xcode DerivedData, `~/.Trash`. Edit the array to change them.
+Clean also runs the fixed command `brew cleanup` if Homebrew is installed.
+
+Terminal equivalent: `./scripts/clean.zsh`.
 
 Build: `./scripts/build-app.sh` → `build/Trash.app`. Test: `swift test`.
 `~/.Trash` and some caches need Full Disk Access (System Settings → Privacy & Security).
